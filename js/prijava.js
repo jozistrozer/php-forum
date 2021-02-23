@@ -6,10 +6,7 @@ $(document).ready(function(){
     var username = $("#username").val();
     // spremenljivka gesla (input password)
     var password = $("#password").val();
-    var error = false;
-
     if(username.length < 3){
-      error = true;
       $("#username").css("border", "1px solid red");
       $("#info").html("Uporabniško ime mora biti dolgo vsaj 3 črke");
     }
@@ -26,7 +23,19 @@ $(document).ready(function(){
           data:{username:username, password:password},
           success: function(data){
             if(data == 1){
-              alert("uspesna prijava");
+              $.ajax({
+                type: "POST",
+                url: "php_handle/ustvari_sejo.php",
+                data: {username: username},
+                success: function(data){
+                  console.log(data);
+                  if(data == 1){
+                     window.location.href = "homepage.php";
+                  }else{
+                      alert("neuspesna seja");
+                    }
+                  }//CE fb-498
+                });
             }else {
               $("#username").css("border", "1px solid red");
               $("#password").css("border", "1px solid red");
