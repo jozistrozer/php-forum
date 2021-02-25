@@ -13,7 +13,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>Homepage (<?php echo $username; ?>)</title>
         <!-- HEADER -->
-        <div class="navbar navbar-inverse">
+        <div class="navbar navbar-inverse" style="margin-bottom: 0px;">
             <div class="container-fluid">
                 <div class="navbar-header">
                 <a class="navbar-brand">Forum</a>
@@ -24,10 +24,16 @@
 
     <body>
         
-
-        <div id="profileSection"></div>
-        <div id="mainSection"></div>
-        <div id="communitySection"></div>
+        <div id="bodyContainer">
+            <div id="profileSection">
+                <div id="tabProfile" class="tabCloud">
+                    
+                </div>
+            </div>
+            <div id="mainSection">bb</div>
+            <div id="communitySection">cc</div>
+        </div>
+        
     </body>
 
     <footer>
