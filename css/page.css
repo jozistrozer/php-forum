@@ -23,7 +23,7 @@
 
 #bodyContainer{
     display: grid;
-    grid-template-columns: 10% 80% 10%;
+    grid-template-columns: 20% 60% 20%;
 }
 
 #bodyContainer > div{
@@ -33,5 +33,4 @@
 .tabCloud{
     margin: 15px;
     border: 1px solid black;
-    height: 500px;
 }

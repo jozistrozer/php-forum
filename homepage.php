@@ -27,11 +27,54 @@
         <div id="bodyContainer">
             <div id="profileSection">
                 <div id="tabProfile" class="tabCloud">
-                    
+                    <h4>Informacije o profilu</h4>
+                    <hr>
+                    <p style="font-weight: bold;"><?php echo $username;?></p>
+                    <p>Število objav: </p>
+                    <p>Število komentarjev: </p>
                 </div>
             </div>
-            <div id="mainSection">bb</div>
-            <div id="communitySection">cc</div>
+            <div id="mainSection">
+                <div id="post-0" class="tabCloud">
+                    <h4>Primer naslova</h4>
+                    <p style="font-color: grey; font-size: 10px;">12:18</p>
+                    <p style="font-size: 10px;"><a href="#">jstrozer</a></p>
+                    <hr>
+                    <p>Tukaj je primer paragrafa, ki opisuje bla bla bla bla bla</p>
+                </div>
+                <div id="post-1" class="tabCloud">
+                    <h4>Primer naslova</h4>
+                    <p style="font-color: grey; font-size: 10px;">12:18</p>
+                    <p style="font-size: 10px;"><a href="#">jstrozer</a></p>
+                    <hr>
+                    <p>Tukaj je primer paragrafa, ki opisuje bla bla bla bla bla</p>
+                </div>
+                <div id="post-2" class="tabCloud">
+                    <h4>Primer naslova</h4>
+                    <p style="font-color: grey; font-size: 10px;">12:18</p>
+                    <p style="font-size: 10px;"><a href="#">jstrozer</a></p>
+                    <hr>
+                    <p>Tukaj je primer paragrafa, ki opisuje bla bla bla bla bla</p>
+                </div>
+            </div>
+            <div id="communitySection">
+                <div id="tabSuggestedCommunities" class="tabCloud">
+                    <h4>Predlagane skupine</h4>
+                    <hr>
+                    <div class="tabCloud">
+                        <h5 style="font-weight: bold;">Živali</h5>
+                        <p>Število sledilcev: 513</p>
+                        <button type="button">Sledi</button>
+                        
+                    </div>
+                    <div class="tabCloud">
+                        <h5 style="font-weight: bold;">Python</h5>
+                        <p>Število sledilcev: 1.2k</p>
+                        <button type="button">Sledi</button>
+                        
+                    </div>
+                </div>
+            </div>
         </div>
         
     </body>
