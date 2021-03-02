@@ -33,7 +33,14 @@
                     <p>Število objav: </p>
                     <p>Število komentarjev: </p>
                 </div>
-            </div>
+                <div id="followedCommunities" class="tabCloud">
+                    <h4>Skupine, ki jim slediš</h4>
+                    <hr>
+                    <p><a href="#">Živali</a></p>
+                    <p><a href="#">Python</a></p>
+                    <p><a href="#">DIY</a></p>
+                </div>
+            </div> 
             <div id="mainSection">
                 <div id="post-0" class="tabCloud">
                     <h4>Primer naslova</h4>
