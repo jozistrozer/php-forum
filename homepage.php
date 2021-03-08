@@ -14,9 +14,13 @@
         <title>Homepage (<?php echo $username; ?>)</title>
         <!-- HEADER -->
         <div class="navbar navbar-inverse" style="margin-bottom: 0px;">
-            <div class="container-fluid">
+            <div class="container-fluid"> 
                 <div class="navbar-header">
                 <a class="navbar-brand">Forum</a>
+                </div>
+
+                <div id="searchBar">
+                    <input type="text">
                 </div>
             </div>
         </div>
@@ -32,6 +36,11 @@
                     <p style="font-weight: bold;"><?php echo $username;?></p>
                     <p>Število objav: </p>
                     <p>Število komentarjev: </p>
+
+                    <?php
+                        echo "<button type='button' onclick=editProfile('".$username."');>Uredi profil</button>";
+                    ?>
+                    
                 </div>
                 <div id="followedCommunities" class="tabCloud">
                     <h4>Skupine, ki jim slediš</h4>
@@ -78,7 +87,6 @@
                         <h5 style="font-weight: bold;">Python</h5>
                         <p>Število sledilcev: 1.2k</p>
                         <button type="button">Sledi</button>
-                        
                     </div>
                 </div>
             </div>
@@ -95,4 +103,11 @@
             </div>
         </nav>
     </footer>
+
+    <script>
+        function editProfile(username){
+
+            location.href = "/edit_profile.php?username="+username;
+        }
+    </script>
 </html>
