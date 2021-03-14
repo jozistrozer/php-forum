@@ -107,7 +107,7 @@
     <script>
         function editProfile(username){
 
-            location.href = "/edit_profile.php?username="+username;
+            window.location.href = "edit_profile.php?username="+username;
         }
     </script>
 </html>
