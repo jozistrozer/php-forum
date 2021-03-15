@@ -1,4 +1,5 @@
 <?php
+    include("php_handle/db_connect.php");
     session_start();
     $username = $_SESSION["username"];
 ?>
@@ -45,12 +46,27 @@
                 <div id="followedCommunities" class="tabCloud">
                     <h4>Skupine, ki jim slediš</h4>
                     <hr>
-                    <p><a href="#">Živali</a></p>
-                    <p><a href="#">Python</a></p>
-                    <p><a href="#">DIY</a></p>
+                    <!-- SLEDENE SKUPINE -->
+                    <?php
+                        $sledene_skupine = $conn->query (
+                            "SELECT s.ime FROM sledene_skupine sk
+                            JOIN skupina s ON sk.id_skupina = s.id
+                            JOIN uporabniki u ON sk.id_uporabnik = u.id
+                            WHERE u.username = '$username'"
+                        );
+
+                        // Zanka, ki izpiše vse skupine, ki jim uporabnik sledi.
+                        while ($row = $sledene_skupine->fetch_assoc()) {
+                            echo "<p><a href='#'>".$row["ime"]."</a></p>";
+                        }
+                    ?>
                 </div>
             </div> 
             <div id="mainSection">
+
+                <?php
+                    
+                ?>
                 <div id="post-0" class="tabCloud">
                     <h4>Primer naslova</h4>
                     <p style="font-color: grey; font-size: 10px;">12:18</p>
