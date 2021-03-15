@@ -65,45 +65,41 @@
             <div id="mainSection">
 
                 <?php
-                    
+                    $objava = $conn->query (
+                        "SELECT o.id, o.cas_objave, o.naslov, o.vsebina FROM objava o
+                        JOIN skupina s ON s.id = o.id_skupina
+                        JOIN sledene_skupine sk ON sk.id = s.id
+                        JOIN uporabniki u ON u.id = sk.id_uporabnik
+                        WHERE u.username = '$username'"
+                    );
+
+                    while ($row = $objava->fetch_assoc()) {
+                        echo "<div id='post-".$row["id"]."' class='tabCloud'>";
+                        echo    "<h4 style='font-weight: bold;'><a href='#'>".$row["naslov"]."</a></h4>";
+                        echo    "<p style='font-color: grey; font-size: 10px;'>".$row["cas_objave"]."</p>";
+                        echo    "<p>UPORABNIK</p>";
+                        echo    "<hr />";
+                        echo "</div>";
+                    }
                 ?>
-                <div id="post-0" class="tabCloud">
-                    <h4>Primer naslova</h4>
-                    <p style="font-color: grey; font-size: 10px;">12:18</p>
-                    <p style="font-size: 10px;"><a href="#">jstrozer</a></p>
-                    <hr>
-                    <p>Tukaj je primer paragrafa, ki opisuje bla bla bla bla bla</p>
-                </div>
-                <div id="post-1" class="tabCloud">
-                    <h4>Primer naslova</h4>
-                    <p style="font-color: grey; font-size: 10px;">12:18</p>
-                    <p style="font-size: 10px;"><a href="#">jstrozer</a></p>
-                    <hr>
-                    <p>Tukaj je primer paragrafa, ki opisuje bla bla bla bla bla</p>
-                </div>
-                <div id="post-2" class="tabCloud">
-                    <h4>Primer naslova</h4>
-                    <p style="font-color: grey; font-size: 10px;">12:18</p>
-                    <p style="font-size: 10px;"><a href="#">jstrozer</a></p>
-                    <hr>
-                    <p>Tukaj je primer paragrafa, ki opisuje bla bla bla bla bla</p>
-                </div>
             </div>
             <div id="communitySection">
                 <div id="tabSuggestedCommunities" class="tabCloud">
                     <h4>Predlagane skupine</h4>
                     <hr>
-                    <div class="tabCloud">
-                        <h5 style="font-weight: bold;">Živali</h5>
-                        <p>Število sledilcev: 513</p>
-                        <button type="button">Sledi</button>
+                    <?php
+                        $priporoceneSkupine = $conn->query ("SELECT * FROM skupina s WHERE s.id
+                        NOT IN (SELECT id_uporabnik FROM sledene_skupine WHERE id_uporabnik=(SELECT id FROM uporabniki WHERE username='$username'))");
+
+                        while ($row = $priporoceneSkupine->fetch_assoc()){
+                            echo "<div class='tabCloud'>";
+                                echo "<h5 style='font-weight: bold;'>".$row["ime"]."</h5>";
+                                echo "<p>Število sledilcev: ".$row["st_uporabnikov"]."</p>";
+                                echo "<button type='button'>Sledi</button>";
+                            echo "</div>";
+                        }
                         
-                    </div>
-                    <div class="tabCloud">
-                        <h5 style="font-weight: bold;">Python</h5>
-                        <p>Število sledilcev: 1.2k</p>
-                        <button type="button">Sledi</button>
-                    </div>
+                    ?>
                 </div>
             </div>
         </div>
