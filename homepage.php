@@ -66,11 +66,8 @@
 
                 <?php
                     $objava = $conn->query (
-                        "SELECT o.id, o.cas_objave, o.naslov, o.vsebina FROM objava o
-                        JOIN skupina s ON s.id = o.id_skupina
-                        JOIN sledene_skupine sk ON sk.id = s.id
-                        JOIN uporabniki u ON u.id = sk.id_uporabnik
-                        WHERE u.username = '$username'"
+                        "SELECT * FROM objava o
+                        WHERE o.id_skupina IN (SELECT id_skupina FROM sledene_skupine sk WHERE sk.id_uporabnik = (SELECT id FROM uporabniki WHERE username='$username'));"
                     );
 
                     while ($row = $objava->fetch_assoc()) {
