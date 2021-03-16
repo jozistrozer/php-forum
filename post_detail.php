@@ -2,6 +2,7 @@
     include("php_handle/db_connect.php");
     session_start();
     $username = $_SESSION["username"];
+    $post_id = $_GET["post_id"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,7 +35,7 @@
                 <div id="tabProfile" class="tabCloud">
                     <h4>Informacije o profilu</h4>
                     <hr>
-                    <p style="font-weight: bold;"><?php echo $username;?></p>
+                    <p style="font-weight: bold;" id="username"><?php echo $username;?></p>
                     <p>Število objav: </p>
                     <p>Število komentarjev: </p>
 
@@ -63,25 +64,28 @@
                 </div>
             </div> 
             <div id="mainSection">
-
+                <div style='border: 1px solid black;'>
                 <?php
-                    $objava = $conn->query (
-                        "SELECT o.id, o.cas_objave, o.naslov, o.vsebina FROM objava o
-                        JOIN skupina s ON s.id = o.id_skupina
-                        JOIN sledene_skupine sk ON sk.id = s.id
-                        JOIN uporabniki u ON u.id = sk.id_uporabnik
-                        WHERE u.username = '$username'"
-                    );
-
-                    while ($row = $objava->fetch_assoc()) {
-                        echo "<div id='post-".$row["id"]."' class='tabCloud'>";
-                        echo    "<h4 style='font-weight: bold;'><a href='post_detail.php?post_id=".$row["id"]."'>".$row["naslov"]."</a></h4>";
-                        echo    "<p style='font-color: grey; font-size: 10px;'>".$row["cas_objave"]."</p>";
-                        echo    "<p>UPORABNIK</p>";
-                        echo    "<hr />";
-                        echo "</div>";
+                    $komentar = $conn->query("SELECT u.username, k.komentar FROM objava o
+                    JOIN komentar k ON o.id = k.id_objava 
+                    JOIN skupina s ON o.id_skupina = s.id
+                    JOIN uporabniki u ON k.id_uporabnik = u.id
+                    WHERE o.id='$post_id'");
+                    
+                    while ($row = $post->fetch_assoc()) {
+                        echo "<h2>".$row["naslov"]."</h2>";
+                        echo "<p>".$row["cas_objave"]."</p>";
+                        echo "<hr>";
+                        echo "<p style='margin-bottom: 50px;'>".$row["vsebina"]."</p>";
+                        echo "<hr>";
+                        echo "<p style='font-weight: bold;'>Komentarji:</p>";
+                        echo "<p style='border: 1px solid black;'><span style='font-weight:bold;'>".$row["username"].": </span>".$row["komentar"]."</p>";
                     }
+
+                    echo "<hr />"; 
+                    echo "<p>Dodaj komentar: <input type='text' id='inpKomentar' minlength='3'></input><button type='button' onclick='DodajKomentar(".$post_id.");'>Komentiraj</button></p>";
                 ?>
+                </div>
             </div>
             <div id="communitySection">
                 <div id="tabSuggestedCommunities" class="tabCloud">
@@ -118,8 +122,30 @@
 
     <script>
         function editProfile(username){
-
             window.location.href = "edit_profile.php?username="+username;
+        }
+
+        function DodajKomentar(post_id) {
+            var komentar = document.getElementById("inpKomentar").value;
+            var username = document.getElementById("username").textContent;
+
+            if (komentar.length > 2) {
+                $.ajax({
+                    url: 'php_handle/dodaj_komentar.php',
+                    type: 'post',
+                    data: {post_id: post_id, komentar: komentar, username: username},
+                    success: function(response){
+                        if (response == 1) {
+                            location.reload();
+                        } else {
+                            alert("Napaka pri dodajanju komentarja.");
+                            console.log(response);
+                        }
+                    }
+                });
+            } else {
+                alert("Komentar je prekratek.");
+            }
         }
     </script>
 </html>
