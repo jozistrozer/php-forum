@@ -66,25 +66,33 @@
             <div id="mainSection">
                 <div style='border: 1px solid black;'>
                 <?php
-                    $komentar = $conn->query("SELECT u.username, k.komentar FROM objava o
-                    JOIN komentar k ON o.id = k.id_objava 
-                    JOIN skupina s ON o.id_skupina = s.id
-                    JOIN uporabniki u ON k.id_uporabnik = u.id
-                    WHERE o.id='$post_id'");
+                    $post = mysqli_fetch_all($conn->query("SELECT * FROM objava WHERE id = '$post_id'"))[0];
+
+                    // Objava
+                    echo "<h2>".$post[2]."</h2>";
+                    echo "<p>".$post[1]."</p>";
+                    echo "<hr>";
+                    echo "<p style='margin-bottom: 50px;'>".$post[3]."</p>";
+                    echo "<hr>";
                     
-                    while ($row = $post->fetch_assoc()) {
-                        echo "<h2>".$row["naslov"]."</h2>";
-                        echo "<p>".$row["cas_objave"]."</p>";
-                        echo "<hr>";
-                        echo "<p style='margin-bottom: 50px;'>".$row["vsebina"]."</p>";
-                        echo "<hr>";
-                        echo "<p style='font-weight: bold;'>Komentarji:</p>";
+                    // Komentarji
+                    echo "<p style='font-weight: bold;'>Komentarji:</p>";
+                    
+                    $komentarji = $conn->query("SELECT u.username, k.komentar FROM komentar k
+                                                JOIN uporabniki u ON u.id = k.id_uporabnik
+                                                WHERE id_objava='$post_id'");
+                    
+                    while ($row = $komentarji->fetch_assoc()) {
                         echo "<p style='border: 1px solid black;'><span style='font-weight:bold;'>".$row["username"].": </span>".$row["komentar"]."</p>";
                     }
-
+                    
+                    
+                    
+                    // Dodajanje komentarja
                     echo "<hr />"; 
                     echo "<p>Dodaj komentar: <input type='text' id='inpKomentar' minlength='3'></input><button type='button' onclick='DodajKomentar(".$post_id.");'>Komentiraj</button></p>";
-                ?>
+                    
+                    ?>
                 </div>
             </div>
             <div id="communitySection">
